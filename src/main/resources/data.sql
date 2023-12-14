@@ -1,8 +1,8 @@
-DELETE FROM users;
 DELETE FROM user_role;
 DELETE FROM dish;
 DELETE FROM vote;
 DELETE FROM restaurant;
+DELETE FROM users;
 
 INSERT INTO users (name, email, password)
 VALUES ('User1', 'user1@yandex.ru', '{noop}password'),
@@ -28,8 +28,8 @@ VALUES ('Pizza', 480, 1),
        ('Steak', 890, 2),
        ('Sushi set', 1299, 3);
 
-INSERT INTO vote (user_id, restaurant_id, vote_time)
-VALUES (1, 1,'2023-12-10'),
-       (2, 1,'2023-12-10'),
-       (3, 2,'2023-12-10'),
-       (4, 3,'2023-12-10');
+INSERT INTO vote (vote_time, user_id, restaurant_id)
+VALUES ('2023-12-10', 1, 1),
+       ('2023-12-10', 2, 1),
+       ('2023-12-10', 3, 2),
+       ('2023-12-10', 4, 3);

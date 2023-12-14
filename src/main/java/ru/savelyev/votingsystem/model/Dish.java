@@ -45,7 +45,7 @@ public class Dish extends NamedEntity {
     private Restaurant restaurant;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     @JsonBackReference
