@@ -3,9 +3,6 @@ DROP TABLE IF EXISTS dish;
 DROP TABLE IF EXISTS vote;
 DROP TABLE IF EXISTS restaurant;
 DROP TABLE IF EXISTS users;
--- DROP SEQUENCE IF EXISTS global_seq;
-
--- CREATE SEQUENCE global_seq START WITH 100000;
 
 CREATE TABLE users
 (
@@ -39,18 +36,18 @@ CREATE TABLE dish
     name          VARCHAR            NOT NULL,
     price         DOUBLE PRECISION   NOT NULL,
     restaurant_id INTEGER            NOT NULL,
-    add_time      DATE DEFAULT now() NOT NULL,
+    date          DATE DEFAULT now() NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX dish_unique_restaurant_name_idx ON dish (name, add_time, restaurant_id);
+CREATE UNIQUE INDEX dish_unique_restaurant_name_idx ON dish (name, date, restaurant_id);
 
 CREATE TABLE vote
 (
     id            INTEGER AUTO_INCREMENT PRIMARY KEY,
     user_id       INTEGER   NOT NULL,
     restaurant_id INTEGER   NOT NULL,
-    vote_time     TIMESTAMP NOT NULL,
+    date          TIMESTAMP NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX vote_unique_date_idx ON vote (user_id, vote_time);
+CREATE UNIQUE INDEX vote_unique_date_idx ON vote (user_id, date);

@@ -5,31 +5,30 @@ DELETE FROM restaurant;
 DELETE FROM users;
 
 INSERT INTO users (name, email, password)
-VALUES ('User1', 'user1@yandex.ru', '{noop}password'),
-       ('Admin', 'admin@gmail.com', '{noop}admin'),
-       ('User2', 'user2@yandex.ru', '{noop}password'),
-       ('User3', 'user3@yandex.ru', '{noop}password'),
-       ('User4', 'user4@yandex.ru', '{noop}password');
+VALUES ('USER', 'user@yandex.ru', '{noop}password'),
+       ('ADMIN', 'admin@gmail.com', '{noop}admin');
+
 
 INSERT INTO user_role (role, user_id)
 VALUES ('USER', 1),
        ('ADMIN', 1),
-       ('USER', 2),
-       ('USER', 3),
-       ('USER', 4);
+       ('USER', 2);
 
 INSERT INTO restaurant (name)
 VALUES ('Moscow time'),
        ('Meat place'),
        ('Yapona papa');
 
-INSERT INTO dish (name, price, restaurant_id)
-VALUES ('Pizza', 480, 1),
-       ('Steak', 890, 2),
-       ('Sushi set', 1299, 3);
+INSERT INTO dish (date, name, price, restaurant_id)
+VALUES ('2023-12-10', 'Pizza', 480, 1),
+       ('2023-12-10', 'Steak', 1990, 2),
+       ('2023-12-10', 'Sushi set', 1299, 3),
+       ('2023-12-11', 'Fish', 670, 1),
+       ('2023-12-11', 'Fried chicken', 390, 2),
+       ('2023-12-11', 'WOK', 450, 3);
 
-INSERT INTO vote (vote_time, user_id, restaurant_id)
+INSERT INTO vote (date, user_id, restaurant_id)
 VALUES ('2023-12-10', 1, 1),
        ('2023-12-10', 2, 1),
-       ('2023-12-10', 3, 2),
-       ('2023-12-10', 4, 3);
+       ('2023-12-11', 1, 2),
+       ('2023-12-12', 2, 3);

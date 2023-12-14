@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
-@Table(name = "vote", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "vote_date"},
+@Table(name = "vote", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "date"},
         name = "vote_unique_date_idx"))
 @Setter
 @Getter
@@ -30,10 +30,10 @@ public class Vote extends BaseEntity {
     @JsonBackReference
     private User user;
 
-    @Column(name = "vote_date", nullable = false, updatable = false, columnDefinition = "timestamp default now()")
+    @Column(name = "date", nullable = false, updatable = false, columnDefinition = "timestamp default now()")
     @NotNull
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDate voteDate;
+    private LocalDate date;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -46,7 +46,7 @@ public class Vote extends BaseEntity {
     public String toString() {
         return "Vote{" +
                 "id=" + id +
-                ", voteDate=" + voteDate +
+                ", date=" + date +
                 '}';
     }
 }
