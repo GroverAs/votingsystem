@@ -31,6 +31,10 @@ public class Restaurant extends NamedEntity {
     @JsonManagedReference
     private Set<Vote> votes;
 
+    public Restaurant(Restaurant restaurant) {
+        this(restaurant.getId(), restaurant.getName());
+    }
+
     public Restaurant(Integer id, String name) {
         super(id, name);
     }

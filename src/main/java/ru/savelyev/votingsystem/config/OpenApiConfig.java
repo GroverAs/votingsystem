@@ -26,7 +26,6 @@ import org.springframework.context.annotation.Configuration;
                         <p><b>Тестовые креденшелы:</b><br>
                         - user@yandex.ru / password<br>
                         - admin@gmail.com / admin<br>
-                        - guest@gmail.com / guest</p>
                         """,
                 contact = @Contact(url = "https://github.com/GroverAs/votingsystem.git", name = "Savelyev Alexander", email = "alex.savelev21@yandex.ru")
         ),
