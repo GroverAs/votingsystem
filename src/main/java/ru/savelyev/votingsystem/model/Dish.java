@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.Range;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "local_date", "restaurant_id"},
+@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "creating_date", "restaurant_id"},
         name = "dish_unique_restaurant_name_idx")})
 @Getter
 @Setter
@@ -33,9 +33,9 @@ public class Dish extends NamedEntity {
     @NotNull
     private Integer price;
 
-    @Column(name = "local_date", nullable = false)
+    @Column(name = "creating_date", nullable = false)
     @NotNull
-    private LocalDate localDate = LocalDate.now();
+    private LocalDate creatingDate = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -49,21 +49,22 @@ public class Dish extends NamedEntity {
         this.price = price;
     }
 
-    public Dish(Integer id, String name, Integer price, Restaurant restaurant, LocalDate localDate) {
+    public Dish(Integer id, String name, Integer price, Restaurant restaurant, LocalDate creatingDate) {
         super(id, name);
         this.price = price;
         this.restaurant = restaurant;
-        this.localDate = localDate;
+        this.creatingDate = creatingDate;
+
     }
 
     public Dish(Dish dish) {
-        this(dish.getId(), dish.getName(), dish.getPrice(), dish.getLocalDate(), dish.getRestaurant());
+        this(dish.getId(), dish.getName(), dish.getPrice(), dish.getCreatingDate(), dish.getRestaurant());
     }
 
     public Dish(Integer id, String name, Integer price, LocalDate localDate, Restaurant restaurant) {
         super(id, name);
         this.price = price;
-        this.localDate = localDate;
+        this.creatingDate = localDate;
         this.restaurant = restaurant;
     }
 
@@ -72,7 +73,7 @@ public class Dish extends NamedEntity {
         return "Dish{" +
                 "name='" + name + '\'' +
                 ", price=" + price +
-                ", localDate=" + localDate +
+                ", localDate=" + creatingDate +
                 ", restaurant=" + restaurant +
                 '}';
     }

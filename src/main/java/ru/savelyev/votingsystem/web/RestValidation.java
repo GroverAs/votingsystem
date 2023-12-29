@@ -3,6 +3,7 @@ package ru.savelyev.votingsystem.web;
 import lombok.experimental.UtilityClass;
 import ru.savelyev.votingsystem.HasId;
 import ru.savelyev.votingsystem.error.IllegalRequestDataException;
+import ru.savelyev.votingsystem.error.NotFoundException;
 
 @UtilityClass
 public class RestValidation {
@@ -19,6 +20,26 @@ public class RestValidation {
             bean.setId(id);
         } else if (bean.id() != id) {
             throw new IllegalRequestDataException(bean.getClass().getSimpleName() + " must has id=" + id);
+        }
+    }
+
+    public static <T> T checkNotFoundWithId(T object, int id) {
+        checkNotFoundWithId(object != null, id);
+        return object;
+    }
+
+    public static void checkNotFoundWithId(boolean found, int id) {
+        checkNotFound(found, "id=" + id);
+    }
+
+    public static <T> T checkNotFound(T object, String msg) {
+        checkNotFound(object != null, msg);
+        return object;
+    }
+
+    public static void checkNotFound(boolean found, String msg) {
+        if (!found) {
+            throw new NotFoundException("Not found entity with " + msg);
         }
     }
 }
