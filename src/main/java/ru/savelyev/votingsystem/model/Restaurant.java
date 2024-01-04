@@ -1,17 +1,15 @@
 package ru.savelyev.votingsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "restaurant", uniqueConstraints = @UniqueConstraint(columnNames = {"name"},
@@ -26,25 +24,21 @@ public class Restaurant extends NamedEntity {
     @JsonIgnore
     private List<Dish> dishes;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
-    private Set<Vote> votes;
-
-    public Restaurant(Restaurant restaurant) {
-        this(restaurant.getId(), restaurant.getName());
-    }
-
     public Restaurant(Integer id, String name) {
         super(id, name);
+    }
+
+    public Restaurant(Restaurant restaurant) {
+        super(restaurant.getId(), restaurant.getName());
+        dishes = restaurant.getDishes();
     }
 
     @Override
     public String toString() {
         return "Restaurant{" +
-                "id=" + id + '\'' +
-                ", name='" + name +
+                "dishes=" + dishes +
+                ", name='" + name + '\'' +
+                ", id=" + id +
                 '}';
     }
 }

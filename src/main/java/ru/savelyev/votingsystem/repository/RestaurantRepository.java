@@ -1,8 +1,6 @@
 package ru.savelyev.votingsystem.repository;
 
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ru.savelyev.votingsystem.model.Restaurant;
 
