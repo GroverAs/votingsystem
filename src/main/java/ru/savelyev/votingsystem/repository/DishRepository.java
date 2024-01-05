@@ -9,9 +9,10 @@ import java.util.List;
 
 @Transactional(readOnly = true)
 public interface DishRepository extends BaseRepository<Dish> {
+
     @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId ORDER BY d.creatingDate DESC")
     List<Dish> getAll(int restaurantId);
 
-    @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId AND d.creatingDate=:creatingDate ORDER BY d.name")
+    @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId AND d.creatingDate=:creatingDate")
     List<Dish> getAllByDate(int restaurantId, LocalDate creatingDate);
 }

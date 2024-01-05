@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.transaction.annotation.Transactional;
+import ru.savelyev.votingsystem.error.IllegalRequestDataException;
 import ru.savelyev.votingsystem.error.NotFoundException;
 
 // https://stackoverflow.com/questions/42781264/multiple-base-repositories-in-spring-data-jpa

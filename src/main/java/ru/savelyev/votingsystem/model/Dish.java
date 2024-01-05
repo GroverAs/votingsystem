@@ -68,6 +68,11 @@ public class Dish extends NamedEntity {
         this.restaurant = restaurant;
     }
 
+    public Dish(Integer id, String name, int price) {
+        super(id, name);
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Dish{" +
