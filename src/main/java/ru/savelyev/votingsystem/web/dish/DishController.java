@@ -40,7 +40,7 @@ public class DishController {
     public List<DishTo> getAllByRestaurantAndDate(@PathVariable int restaurantId,
                                                   @RequestParam LocalDate date) {
         List<Dish> allDishesByDate = dishRepository.getAllByDate(restaurantId, date == null ? LocalDate.now() : date);
-        return DishUtil.createTos(allDishesByDate);
+        return DishUtil.createDishTos(allDishesByDate);
     }
 
     @Transactional

@@ -58,7 +58,10 @@ public class Dish extends NamedEntity {
     }
 
     public Dish(Dish dish) {
-        this(dish.getId(), dish.getName(), dish.getPrice(), dish.getCreatingDate(), dish.getRestaurant());
+        super(dish.getId(), dish.getName());
+        this.price = dish.getPrice();
+        this.creatingDate = dish.getCreatingDate();
+        this.restaurant = dish.getRestaurant();
     }
 
     public Dish(Integer id, String name, Integer price, LocalDate localDate, Restaurant restaurant) {

@@ -9,7 +9,10 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class RestaurantTo extends NamedTo {
 
-    public RestaurantTo(Integer id, String name) {
+    List<DishTo> dishTos;
+
+    public RestaurantTo(Integer id, String name, List<DishTo> dishTos) {
         super(id, name);
+        this.dishTos = dishTos;
     }
 }

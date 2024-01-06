@@ -23,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class AdminRestaurantController {
-    protected static final String REST_URL = "/api/admin/restaurants";
+    public static final String REST_URL = "/api/admin/restaurants";
     private final RestaurantRepository restaurantRepository;
 
     @GetMapping("/{restaurantId}")

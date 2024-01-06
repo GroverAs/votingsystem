@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
-
     @Query("SELECT r FROM Restaurant r JOIN FETCH r.dishes d WHERE d.creatingDate=:date AND r.id=:id")
     Optional<Restaurant> getByIdAndLocalDate(int id, LocalDate date);
 
