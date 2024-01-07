@@ -10,14 +10,14 @@ public class RestaurantTestData {
     public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingEqualsComparator(Restaurant.class);
     public static final MatcherFactory.Matcher<RestaurantTo> RESTAURANT_TO_MATCHER = MatcherFactory.usingEqualsComparator(RestaurantTo.class);
 
-    public static final int RESTAURANT1_ID = 1;
-    public static final int RESTAURANT2_ID = 2;
-    public static final int RESTAURANT3_ID = 3;
+    public static final int MOSCOW_TIME_ID = 1;
+    public static final int MEAT_PLACE_ID = 2;
+    public static final int YAPONA_PAPA_ID = 3;
     public static final int NOT_FOUND = 50;
 
-    public static final Restaurant restaurant1 = new Restaurant(RESTAURANT1_ID, "Moscow time");
-    public static final Restaurant restaurant2 = new Restaurant(RESTAURANT2_ID, "Meat place");
-    public static final Restaurant restaurant3 = new Restaurant(RESTAURANT3_ID, "Yapona papa");
+    public static final Restaurant restaurant1 = new Restaurant(MOSCOW_TIME_ID, "Moscow time");
+    public static final Restaurant restaurant2 = new Restaurant(MEAT_PLACE_ID, "Meat place");
+    public static final Restaurant restaurant3 = new Restaurant(YAPONA_PAPA_ID, "Yapona papa");
     public static final List<Restaurant> RESTAURANTS = List.of(restaurant1, restaurant2, restaurant3);
 
     public static Restaurant getNew() {

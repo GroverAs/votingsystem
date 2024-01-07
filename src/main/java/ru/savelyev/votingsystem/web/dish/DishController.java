@@ -19,8 +19,7 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.savelyev.votingsystem.web.RestValidation.assureIdConsistent;
-import static ru.savelyev.votingsystem.web.RestValidation.checkNew;
+import static ru.savelyev.votingsystem.web.RestValidation.*;
 
 @RestController
 @RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -31,6 +30,13 @@ public class DishController {
     private final DishRepository dishRepository;
     private final RestaurantRepository restaurantRepository;
 
+    @GetMapping("/{id}")
+    public Dish get(@PathVariable int id,
+                    @PathVariable int restaurantId) {
+        log.info("get dish {} for restaurant {}", id, restaurantId);
+        return dishRepository.getExisted(id);
+    }
+
     @GetMapping
     public List<Dish> getAllByRestaurant(@PathVariable int restaurantId) {
         return dishRepository.getAll(restaurantId);
@@ -39,8 +45,8 @@ public class DishController {
     @GetMapping("/by-date")
     public List<DishTo> getAllByRestaurantAndDate(@PathVariable int restaurantId,
                                                   @RequestParam LocalDate date) {
-        List<Dish> allDishesByDate = dishRepository.getAllByDate(restaurantId, date == null ? LocalDate.now() : date);
-        return DishUtil.createDishTos(allDishesByDate);
+        List<Dish> getAllDishesByDate = dishRepository.getAllByDate(restaurantId, date == null ? LocalDate.now() : date);
+        return DishUtil.createDishTos(getAllDishesByDate);
     }
 
     @Transactional
@@ -75,9 +81,8 @@ public class DishController {
     @Transactional
     @DeleteMapping("/{dishId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int dishId,
-                       @PathVariable int restaurantId) {
-        dishRepository.deleteExisted(dishId);
+    public void delete(@PathVariable int dishId) {
+        dishRepository.delete(dishId);
 
     }
 }

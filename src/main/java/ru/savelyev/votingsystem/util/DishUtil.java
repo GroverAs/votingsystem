@@ -8,6 +8,7 @@ import ru.savelyev.votingsystem.to.NamedTo;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @UtilityClass
 public class DishUtil {
@@ -17,12 +18,10 @@ public class DishUtil {
     }
 
     public static List<DishTo> createDishTos(List<Dish> dishes) {
-        List<DishTo> dishTos = new ArrayList<>();
-        for (Dish dish : dishes) {
-            dishTos.add(createDishTo(dish));
-        }
-        dishTos.sort(Comparator.comparing(NamedTo::getName));
-        return dishTos;
+        return dishes.stream()
+                .map(DishUtil::createDishTo)
+                .sorted(Comparator.comparing(NamedTo::getName))
+                .collect(Collectors.toList());
     }
 
     public static Dish getDish(DishTo dishTo) {

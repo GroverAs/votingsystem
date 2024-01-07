@@ -24,10 +24,13 @@ public class DishTestData {
     public static final Dish yaponaPapa_Dish2 = new Dish(8, "Fish", 470, null, LocalDate.now());
     public static final Dish yaponaPapa_Dish3 = new Dish(9, "WOK", 650, null, LocalDate.now());
 
+    public static final Dish yaponaPapa_old1 = new Dish(10, "Sushi roll", 399, null, LocalDate.now().minusDays(1));
+
     public static final List<Dish> moscowTime_menu = List.of(moscowTime_Dish3, moscowTime_Dish2, moscowTime_Dish1);
     public static final List<Dish> meatPlace_menu = List.of(meatPlace_Dish3, meatPlace_Dish2, meatPlace_Dish1);
-
     public static final List<Dish> yaponaPapa_menu = List.of(yaponaPapa_Dish3, yaponaPapa_Dish2, yaponaPapa_Dish1);
+
+    public static final List<Dish> yaponaPapa_menu_allDays = List.of(yaponaPapa_Dish3, yaponaPapa_Dish2, yaponaPapa_Dish1, yaponaPapa_old1);
 
     public static Dish getNew() {
         return new Dish(null, "New_Dish11", 111, null, LocalDate.now());

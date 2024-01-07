@@ -36,7 +36,7 @@ class RestaurantControllerTest extends AbstractControllerTest {
     @Test
     void getByIdAndDateWithDishes() throws Exception {
         restaurant1.setDishes(moscowTime_menu);
-        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT1_ID + "/with-menu"))
+        perform(MockMvcRequestBuilders.get(REST_URL + MOSCOW_TIME_ID + "/with-menu"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

@@ -31,7 +31,7 @@ public class Dish extends NamedEntity {
     @Column(name = "price", nullable = false)
     @Range(min = 10, max = 8000)
     @NotNull
-    private Integer price;
+    private int price;
 
     @Column(name = "creating_date", nullable = false)
     @NotNull
@@ -39,17 +39,16 @@ public class Dish extends NamedEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
     @NotNull
     private Restaurant restaurant;
 
-    public Dish(String name, Integer price) {
+    public Dish(String name, int price) {
         super(null, name);
         this.price = price;
     }
 
-    public Dish(Integer id, String name, Integer price, Restaurant restaurant, LocalDate creatingDate) {
+    public Dish(Integer id, String name, int price, Restaurant restaurant, LocalDate creatingDate) {
         super(id, name);
         this.price = price;
         this.restaurant = restaurant;
@@ -64,7 +63,7 @@ public class Dish extends NamedEntity {
         this.restaurant = dish.getRestaurant();
     }
 
-    public Dish(Integer id, String name, Integer price, LocalDate localDate, Restaurant restaurant) {
+    public Dish(Integer id, String name, int price, LocalDate localDate, Restaurant restaurant) {
         super(id, name);
         this.price = price;
         this.creatingDate = localDate;
