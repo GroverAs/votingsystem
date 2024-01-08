@@ -46,8 +46,8 @@ CREATE TABLE vote
     id            INTEGER AUTO_INCREMENT PRIMARY KEY,
     user_id       INTEGER            NOT NULL,
     restaurant_id INTEGER            NOT NULL,
-    local_date    DATE DEFAULT now() NOT NULL,
+    voting_date    DATE DEFAULT now() NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX vote_unique_local_date_idx ON vote (user_id, local_date);
+CREATE UNIQUE INDEX vote_unique_voting_date_idx ON vote (user_id, voting_date);
