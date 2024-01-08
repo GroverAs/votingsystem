@@ -15,17 +15,17 @@ public class RestaurantTestData {
     public static final int YAPONA_PAPA_ID = 3;
     public static final int NOT_FOUND = 50;
 
-    public static final Restaurant restaurant1 = new Restaurant(MOSCOW_TIME_ID, "Moscow time");
-    public static final Restaurant restaurant2 = new Restaurant(MEAT_PLACE_ID, "Meat place");
-    public static final Restaurant restaurant3 = new Restaurant(YAPONA_PAPA_ID, "Yapona papa");
-    public static final List<Restaurant> RESTAURANTS = List.of(restaurant1, restaurant2, restaurant3);
+    public static final Restaurant moscow_time = new Restaurant(MOSCOW_TIME_ID, "Moscow time");
+    public static final Restaurant meat_place = new Restaurant(MEAT_PLACE_ID, "Meat place");
+    public static final Restaurant yapona_papa = new Restaurant(YAPONA_PAPA_ID, "Yapona papa");
+    public static final List<Restaurant> RESTAURANTS = List.of(moscow_time, meat_place, yapona_papa);
 
     public static Restaurant getNew() {
         return new Restaurant(null, "New restaurant");
     }
 
     public static Restaurant getUpdated() {
-        Restaurant updated = new Restaurant(restaurant1);
+        Restaurant updated = new Restaurant(moscow_time);
         updated.setName("Moscow time updated");
         return updated;
     }

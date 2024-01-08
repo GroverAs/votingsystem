@@ -33,7 +33,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(restaurant1));
+                .andExpect(RESTAURANT_MATCHER.contentJson(moscow_time));
     }
 
     @Test
@@ -42,7 +42,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_TO_MATCHER.contentJson(createRestTos(List.of(restaurant3, restaurant2, restaurant1))));
+                .andExpect(RESTAURANT_TO_MATCHER.contentJson(createRestTos(RESTAURANTS)));
     }
 
     @Test

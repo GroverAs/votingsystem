@@ -30,15 +30,6 @@ public class Restaurant extends NamedEntity {
 
     public Restaurant(Restaurant restaurant) {
         super(restaurant.getId(), restaurant.getName());
-        dishes = restaurant.getDishes();
-    }
-
-    @Override
-    public String toString() {
-        return "Restaurant{" +
-                "dishes=" + dishes +
-                ", name='" + name + '\'' +
-                ", id=" + id +
-                '}';
+        this.dishes = restaurant.getDishes();
     }
 }
