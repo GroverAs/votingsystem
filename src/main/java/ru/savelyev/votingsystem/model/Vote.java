@@ -49,11 +49,10 @@ public class Vote extends BaseEntity {
         this.restaurant = restaurant;
     }
 
-    @Override
-    public String toString() {
-        return "Vote{" +
-                "id=" + id +
-                ", localDate=" + votingDate +
-                '}';
+    public Vote(LocalDate votingDate, User user, Restaurant restaurant) {
+        this.votingDate = votingDate;
+        this.user = user;
+        this.restaurant = restaurant;
     }
+
 }
