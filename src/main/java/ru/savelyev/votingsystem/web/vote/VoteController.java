@@ -3,10 +3,12 @@ package ru.savelyev.votingsystem.web.vote;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import ru.savelyev.votingsystem.error.IllegalRequestDataException;
+import ru.savelyev.votingsystem.model.Restaurant;
+import ru.savelyev.votingsystem.model.User;
+import ru.savelyev.votingsystem.model.Vote;
 import ru.savelyev.votingsystem.repository.RestaurantRepository;
 import ru.savelyev.votingsystem.repository.VoteRepository;
 import ru.savelyev.votingsystem.to.VoteTo;
@@ -38,4 +40,17 @@ public class VoteController {
     public List<VoteTo> getAll() {
         return createVoteTos(voteRepository.getAllUserVotes(authId()));
     }
+
+    @GetMapping("/restaurant")
+    public List<VoteTo> getAllForRestaurant(@RequestParam int restaurantId) {
+        return createVoteTos(voteRepository.getAllUsersVotesForRestaurant(restaurantId, authId()));
+    }
+
+    @Transactional
+    @PostMapping
+    public Vote create(Restaurant restaurant, User user) {
+        Vote newVote = new Vote(null, LocalDate.now(), user, restaurant);
+        return voteRepository.save(newVote);
+    }
+
 }

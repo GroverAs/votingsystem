@@ -4,6 +4,11 @@ import lombok.experimental.UtilityClass;
 import ru.savelyev.votingsystem.HasId;
 import ru.savelyev.votingsystem.error.IllegalRequestDataException;
 
+import java.time.LocalTime;
+
+import static ru.savelyev.votingsystem.util.TimeLimitUtil.TIME_LIMIT_FORMATTER;
+import static ru.savelyev.votingsystem.util.TimeLimitUtil.getLimitTime;
+
 @UtilityClass
 public class RestValidation {
 
@@ -35,4 +40,10 @@ public class RestValidation {
         checkNotFound(object != null, msg);
         return object;
     }
+    public static void assureTimeOver(LocalTime currentTime) {
+        if (currentTime.isAfter(getLimitTime())) {
+            throw new IllegalRequestDataException("Time limit to change the vote is before:" + getLimitTime().format(TIME_LIMIT_FORMATTER) + ", you try to vote at: " + currentTime.format(TIME_LIMIT_FORMATTER));
+        }
+    }
+
 }
