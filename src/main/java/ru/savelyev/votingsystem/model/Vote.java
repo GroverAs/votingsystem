@@ -42,7 +42,7 @@ public class Vote extends BaseEntity {
     @JsonBackReference
     private Restaurant restaurant;
 
-    public Vote(Integer id, LocalDate votingDate, User user, Restaurant restaurant) {
+    public Vote(Integer id, User user, Restaurant restaurant, LocalDate votingDate) {
         super(id);
         this.votingDate = votingDate;
         this.user = user;

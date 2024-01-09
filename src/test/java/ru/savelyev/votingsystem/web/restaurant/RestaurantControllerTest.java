@@ -1,9 +1,11 @@
 package ru.savelyev.votingsystem.web.restaurant;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.savelyev.votingsystem.repository.RestaurantRepository;
 import ru.savelyev.votingsystem.util.RestaurantUtil;
 import ru.savelyev.votingsystem.web.AbstractControllerTest;
 import ru.savelyev.votingsystem.web.user.UserTestData;
@@ -19,6 +21,9 @@ import static ru.savelyev.votingsystem.web.restaurant.RestaurantTestData.*;
 class RestaurantControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = RestaurantController.REST_URL + "/";
+
+    @Autowired
+    RestaurantRepository restaurantRepository;
 
     @Test
     void getAll() throws Exception {

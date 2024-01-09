@@ -17,22 +17,22 @@ import ru.savelyev.votingsystem.repository.RestaurantRepository;
 import ru.savelyev.votingsystem.repository.VoteRepository;
 import ru.savelyev.votingsystem.to.VoteTo;
 import ru.savelyev.votingsystem.util.VoteUtil;
+import ru.savelyev.votingsystem.web.AuthUser;
 
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static ru.savelyev.votingsystem.util.VoteUtil.createVoteTos;
 import static ru.savelyev.votingsystem.web.AuthUser.authId;
 import static ru.savelyev.votingsystem.web.RestValidation.assureTimeOver;
 
+@RestController
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
-@RestController
 public class VoteController {
     protected static final String REST_URL = "/api/profile/votes";
     private final VoteRepository voteRepository;
@@ -46,8 +46,9 @@ public class VoteController {
     }
 
     @GetMapping
-    public List<VoteTo> getAll() {
-        return createVoteTos(voteRepository.getAllUserVotes(authId()));
+    public List<VoteTo> getAll(AuthUser authUser) {
+        List<Vote> votes = voteRepository.getAllUserVotes(authUser.id());
+        return createVoteTos(votes);
     }
 
     @GetMapping("/restaurant")
@@ -62,7 +63,8 @@ public class VoteController {
         if(vote.isPresent()) {
             throw new DataConflictException("Vote for user " + user + " already created.");
         }
-        Vote newVote = new Vote(null, LocalDate.now(), user, restaurant);
+        LocalDate voteDate = LocalDate.now();
+        Vote newVote = new Vote(null, user, restaurant, voteDate);
         if (!newVote.isNew()) {
             assureTimeOver(LocalTime.now());
         }
