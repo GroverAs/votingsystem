@@ -8,12 +8,12 @@ import ru.savelyev.votingsystem.to.RestaurantTo;
 import java.util.Collection;
 import java.util.List;
 
-import static ru.savelyev.votingsystem.util.DishUtil.createDishTos;
+import static ru.savelyev.votingsystem.util.DishUtil.getDishTos;
 
 @UtilityClass
 public class RestaurantUtil {
     public static RestaurantTo createRestTo(Restaurant restaurant) {
-        return new RestaurantTo(restaurant.getId(), restaurant.getName(), createDishTos(restaurant.getDishes()));
+        return new RestaurantTo(restaurant.getId(), restaurant.getName(), getDishTos(restaurant.getDishes()));
     }
 
     public static List<RestaurantTo> createRestTos(Collection<Restaurant> restaurants) {

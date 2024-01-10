@@ -7,18 +7,18 @@ import ru.savelyev.votingsystem.HasId;
 
 import java.time.LocalDate;
 
-    @Value
-    @EqualsAndHashCode(callSuper = false)
-    @ToString(callSuper = true)
-    public class VoteTo extends BaseTo implements HasId {
+@Value
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
+public class VoteTo extends BaseTo implements HasId {
 
-        LocalDate votingDate;
-        int restaurantId;
+    LocalDate votingDate;
+    int restaurantId;
 
-        public VoteTo(Integer id, LocalDate votingDate, int restaurantId) {
-            super(id);
-            this.votingDate = votingDate;
-            this.restaurantId = restaurantId;
-        }
+    public VoteTo(Integer id, LocalDate votingDate, int restaurantId) {
+        super(id);
+        this.votingDate = votingDate;
+        this.restaurantId = restaurantId;
+    }
 
 }

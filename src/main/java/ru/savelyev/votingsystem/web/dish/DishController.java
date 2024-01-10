@@ -33,20 +33,19 @@ public class DishController {
     @GetMapping("/{id}")
     public Dish get(@PathVariable int id,
                     @PathVariable int restaurantId) {
-        log.info("get dish {} for restaurant {}", id, restaurantId);
-        return dishRepository.getExisted(id);
+        return dishRepository.isDishRelateToRestaurant(id, restaurantId);
     }
 
     @GetMapping
     public List<Dish> getAllByRestaurant(@PathVariable int restaurantId) {
-        return dishRepository.getAll(restaurantId);
+        return dishRepository.getAllDishesByRestaurantId(restaurantId);
     }
 
     @GetMapping("/by-date")
     public List<DishTo> getAllByRestaurantAndDate(@PathVariable int restaurantId,
                                                   @RequestParam LocalDate date) {
         List<Dish> getAllDishesByDate = dishRepository.getAllByDate(restaurantId, date == null ? LocalDate.now() : date);
-        return DishUtil.createDishTos(getAllDishesByDate);
+        return DishUtil.getDishTos(getAllDishesByDate);
     }
 
     @Transactional

@@ -9,12 +9,10 @@ import ru.savelyev.votingsystem.util.VoteUtil;
 import ru.savelyev.votingsystem.web.AbstractControllerTest;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.savelyev.votingsystem.util.VoteUtil.createVoteTos;
 import static ru.savelyev.votingsystem.web.vote.VoteTestData.*;
 
 class VoteControllerTest extends AbstractControllerTest {

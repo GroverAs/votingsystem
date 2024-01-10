@@ -5,10 +5,8 @@ import ru.savelyev.votingsystem.model.Dish;
 import ru.savelyev.votingsystem.to.DishTo;
 import ru.savelyev.votingsystem.to.NamedTo;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @UtilityClass
 public class DishUtil {
@@ -17,11 +15,11 @@ public class DishUtil {
         return new DishTo(dish.getId(), dish.getName(), dish.getPrice());
     }
 
-    public static List<DishTo> createDishTos(List<Dish> dishes) {
+    public static List<DishTo> getDishTos(List<Dish> dishes) {
         return dishes.stream()
                 .map(DishUtil::createDishTo)
                 .sorted(Comparator.comparing(NamedTo::getName))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static Dish getDish(DishTo dishTo) {

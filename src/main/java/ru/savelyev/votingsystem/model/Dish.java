@@ -5,13 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
+import ru.savelyev.votingsystem.HasId;
 
 import java.time.LocalDate;
 
@@ -20,8 +18,10 @@ import java.time.LocalDate;
         name = "dish_unique_restaurant_name_idx")})
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Dish extends NamedEntity {
+@ToString(callSuper = true)
+public class Dish extends NamedEntity implements HasId {
 
     @Column(name = "name", nullable = false)
     @Size(max = 150)
@@ -73,15 +73,5 @@ public class Dish extends NamedEntity {
     public Dish(Integer id, String name, int price) {
         super(id, name);
         this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return "Dish{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                ", localDate=" + creatingDate +
-                ", restaurant=" + restaurant +
-                '}';
     }
 }

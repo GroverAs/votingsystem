@@ -18,6 +18,6 @@ public class VoteUtil {
     public static List<VoteTo> createVoteTos(Collection<Vote> votes) {
         return votes.stream()
                 .map(VoteUtil::createVoteTo)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

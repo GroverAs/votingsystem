@@ -18,8 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.savelyev.votingsystem.web.dish.DishTestData.*;
-import static ru.savelyev.votingsystem.web.restaurant.RestaurantTestData.MEAT_PLACE_ID;
-import static ru.savelyev.votingsystem.web.restaurant.RestaurantTestData.MOSCOW_TIME_ID;
+import static ru.savelyev.votingsystem.web.restaurant.RestaurantTestData.*;
 
 class DishControllerTest extends AbstractControllerTest {
 
@@ -30,7 +29,7 @@ class DishControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + 1, MEAT_PLACE_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + 1, MOSCOW_TIME_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -39,11 +38,11 @@ class DishControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllByRestaurant() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL, MEAT_PLACE_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL, YAPONA_PAPA_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(DISH_TO_MATCHER.contentJson(DishUtil.createDishTos(yaponaPapa_menu_allDays)));
+                .andExpect(DISH_TO_MATCHER.contentJson(DishUtil.getDishTos(yaponaPapa_menu_allDays)));
     }
 
     @Test
@@ -53,7 +52,7 @@ class DishControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(DISH_TO_MATCHER.contentJson(DishUtil.createDishTos(moscowTime_menu)));
+                .andExpect(DISH_TO_MATCHER.contentJson(DishUtil.getDishTos(moscowTime_menu)));
     }
 
     @Test
@@ -65,7 +64,7 @@ class DishControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        Dish updated = getUpdated();
+        Dish updated = DishTestData.getUpdated();
         perform(MockMvcRequestBuilders
                 .put(REST_URL + 1, MOSCOW_TIME_ID)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -76,7 +75,7 @@ class DishControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {
-        Dish newDish = getNew();
+        Dish newDish = DishTestData.getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL, MOSCOW_TIME_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newDish)))

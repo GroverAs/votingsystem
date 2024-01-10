@@ -15,9 +15,14 @@ public interface DishRepository extends BaseRepository<Dish> {
     @Query("SELECT d FROM Dish d WHERE d.id=?1 AND d.restaurant.id=?2")
     Optional<Dish> get(int id, int restaurantId);
 
-    @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId ORDER BY d.creatingDate DESC")
-    List<Dish> getAll(int restaurantId);
+    @Query("SELECT d FROM Dish d WHERE d.restaurant.id=?1 ORDER BY d.creatingDate DESC")
+    List<Dish> getAllDishesByRestaurantId(int restaurantId);
 
     @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:restaurantId AND d.creatingDate=:creatingDate")
     List<Dish> getAllByDate(int restaurantId, LocalDate creatingDate);
+
+    default Dish isDishRelateToRestaurant(int id, int restaurantId) {
+        return get(id, restaurantId)
+                .orElseThrow(() -> new IllegalRequestDataException("Dish with id=" + id + " is not related to restaurant with id=" + restaurantId));
+    }
 }

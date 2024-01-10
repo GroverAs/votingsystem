@@ -10,13 +10,12 @@ import ru.savelyev.votingsystem.repository.RestaurantRepository;
 import ru.savelyev.votingsystem.util.JsonUtil;
 import ru.savelyev.votingsystem.web.AbstractControllerTest;
 
-import java.util.List;
-
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.savelyev.votingsystem.util.RestaurantUtil.createRestTo;
 import static ru.savelyev.votingsystem.util.RestaurantUtil.createRestTos;
 import static ru.savelyev.votingsystem.web.restaurant.RestaurantTestData.*;
 
@@ -29,11 +28,11 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + MOSCOW_TIME_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + YAPONA_PAPA_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(moscow_time));
+                .andExpect(RESTAURANT_TO_MATCHER.contentJson(createRestTo(yapona_papa)));
     }
 
     @Test

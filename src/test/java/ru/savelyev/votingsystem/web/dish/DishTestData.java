@@ -20,9 +20,9 @@ public class DishTestData {
     public static final Dish meatPlace_Dish1 = new Dish(4, "Steak", 1990, null, LocalDate.now());
     public static final Dish meatPlace_Dish2 = new Dish(5, "Burger", 290, null, LocalDate.now());
     public static final Dish meatPlace_Dish3 = new Dish(6, "Tea", 95, null, LocalDate.now());
-    public static final Dish yaponaPapa_Dish1 = new Dish(7, "Sushi set", 95, null, LocalDate.now());
-    public static final Dish yaponaPapa_Dish2 = new Dish(8, "Fish", 470, null, LocalDate.now());
-    public static final Dish yaponaPapa_Dish3 = new Dish(9, "WOK", 650, null, LocalDate.now());
+    public static final Dish yaponaPapa_Dish1 = new Dish(7, "Sushi set", 1299, null, LocalDate.now());
+    public static final Dish yaponaPapa_Dish2 = new Dish(8, "Fish", 670, null, LocalDate.now());
+    public static final Dish yaponaPapa_Dish3 = new Dish(9, "WOK", 450, null, LocalDate.now());
 
     public static final Dish yaponaPapa_old1 = new Dish(10, "Sushi roll", 399, null, LocalDate.now().minusDays(1));
 
