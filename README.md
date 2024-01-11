@@ -1,3 +1,5 @@
+### Task:
+
 Restaurant Voting System
 The voting system for deciding where to have lunch.
 
@@ -16,12 +18,19 @@ If it is before 11:00 we assume that he changed his mind.
 If it is after 11:00 then it is too late, vote can't be changed
 Each restaurant provides a new menu each day.
 -----------------------------------------------------
-- Stack: [JDK 21](http://jdk.java.net/17/), Spring Boot 3.x, Lombok, H2, Caffeine Cache, SpringDoc OpenApi 2.x
-- Run: `mvn spring-boot:run` in root directory.
+### Stack: 
+- JDK 21.0.1, 
+- Spring Boot 3.x, 
+- Lombok, 
+- H2, 
+- Caffeine Cache, 
+- SpringDoc OpenApi 2.x
 -----------------------------------------------------
-Креденшелы:
+### Credentials for testing
 ```
 User:  user@yandex.ru / password
 Admin: admin@gmail.com / admin
-Guest: guest@gmail.com / guest
 ```
+### Swagger link
+
+http://localhost:8080/swagger-ui/index.html

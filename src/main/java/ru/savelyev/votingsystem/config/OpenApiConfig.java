@@ -21,13 +21,10 @@ import org.springframework.context.annotation.Configuration;
         info = @Info(
                 title = "REST API documentation",
                 version = "1.0",
-                description = """
-                        Graduation project 'Restaurant Voting System'
-                        <p><b>Тестовые креденшелы:</b><br>
-                        - user@yandex.ru / password<br>
-                        - admin@gmail.com / admin<br>
-                        """,
-                contact = @Contact(url = "https://github.com/GroverAs/votingsystem.git", name = "Savelyev Alexander", email = "alex.savelev21@yandex.ru")
+                description = "Graduation project 'Restaurant Voting System'",
+                contact = @Contact(url = "https://github.com/GroverAs/votingsystem.git",
+                        name = "Savelyev Alexander",
+                        email = "alex.savelev21@yandex.ru")
         ),
         security = @SecurityRequirement(name = "basicAuth")
 )
