@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.savelyev.votingsystem.model.Dish;
 import ru.savelyev.votingsystem.repository.DishRepository;
@@ -21,7 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.savelyev.votingsystem.web.dish.DishTestData.*;
-import static ru.savelyev.votingsystem.web.restaurant.RestaurantTestData.*;
+import static ru.savelyev.votingsystem.web.restaurant.RestaurantTestData.MOSCOW_TIME_ID;
+import static ru.savelyev.votingsystem.web.restaurant.RestaurantTestData.YAPONA_PAPA_ID;
 
 @WithUserDetails(value = UserTestData.ADMIN_MAIL)
 class DishControllerTest extends AbstractControllerTest {

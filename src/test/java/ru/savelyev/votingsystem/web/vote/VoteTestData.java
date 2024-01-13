@@ -6,7 +6,6 @@ import ru.savelyev.votingsystem.web.MatcherFactory;
 import ru.savelyev.votingsystem.web.restaurant.RestaurantTestData;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static ru.savelyev.votingsystem.web.user.UserTestData.admin;
 import static ru.savelyev.votingsystem.web.user.UserTestData.user;
@@ -22,8 +21,9 @@ public class VoteTestData {
     public static final Vote vote1 = new Vote(VOTE1_ID, user, RestaurantTestData.moscow_time, LocalDate.now());
     public static final Vote vote2 = new Vote(VOTE2_ID, user, RestaurantTestData.moscow_time, LocalDate.now().minusDays(1));
     public static final Vote vote3 = new Vote(VOTE3_ID, user, RestaurantTestData.yapona_papa,LocalDate.now().minusDays(2));
-    public static final Vote vote5 = new Vote(VOTE4_ID, admin, RestaurantTestData.meat_place, LocalDate.now());
-    public static final List<Vote> user_votes = List.of(vote3, vote2, vote1);
+    public static final Vote vote4 = new Vote(VOTE4_ID, admin, RestaurantTestData.meat_place, LocalDate.now());
 
-
+    public static VoteTo getNewVote() {
+        return new VoteTo(null, LocalDate.now(), RestaurantTestData.MOSCOW_TIME_ID);
+    }
 }

@@ -40,6 +40,7 @@ public class RestValidation {
         checkNotFound(object != null, msg);
         return object;
     }
+
     public static void assureTimeOver(LocalTime currentTime) {
         if (currentTime.isAfter(getLimitTime())) {
             throw new IllegalRequestDataException("Time limit to change the vote is before:" + getLimitTime().format(TIME_LIMIT_FORMATTER) + ", you try to vote at: " + currentTime.format(TIME_LIMIT_FORMATTER));

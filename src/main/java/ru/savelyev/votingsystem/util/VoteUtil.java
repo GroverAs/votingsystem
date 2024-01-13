@@ -6,7 +6,6 @@ import ru.savelyev.votingsystem.to.VoteTo;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @UtilityClass
 public class VoteUtil {
