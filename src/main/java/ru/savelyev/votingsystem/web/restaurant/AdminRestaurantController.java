@@ -40,7 +40,7 @@ public class AdminRestaurantController {
         return restaurantRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
-    @Operation(summary = "Create all restaurant")
+    @Operation(summary = "Create restaurant")
     @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> createWithLocation(Restaurant restaurant) {
