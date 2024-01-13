@@ -10,7 +10,6 @@ import ru.savelyev.votingsystem.model.BaseEntity;
 import ru.savelyev.votingsystem.model.Vote;
 import ru.savelyev.votingsystem.repository.VoteRepository;
 import ru.savelyev.votingsystem.to.VoteTo;
-import ru.savelyev.votingsystem.util.JsonUtil;
 import ru.savelyev.votingsystem.util.TimeLimitUtil;
 import ru.savelyev.votingsystem.util.VoteUtil;
 import ru.savelyev.votingsystem.web.AbstractControllerTest;
@@ -61,7 +60,7 @@ class VoteControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @WithUserDetails(value = ADMIN_MAIL)
+    @WithUserDetails(value = USER2_MAIL)
     void create() throws Exception {
         VoteTo newVote = getNewVote();
         ResultActions actions = perform(MockMvcRequestBuilders.post(REST_URL)
@@ -77,21 +76,16 @@ class VoteControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(value = USER_MAIL)
-    public void update() throws Exception {
-        if(TimeLimitUtil.getLimitTime().isBefore(LocalTime.now())) {
-            perform(MockMvcRequestBuilders.put(REST_URL)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(JsonUtil.writeValue(MOSCOW_TIME_ID)))
-                    .andDo(print())
-                    .andExpect(status().isOk());
-        } else {
-            perform(MockMvcRequestBuilders.put(REST_URL)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(JsonUtil.writeValue(MOSCOW_TIME_ID)))
-                    .andDo(print())
-                    .andExpect(status().isUnprocessableEntity())
-                    .andExpect(status().isNoContent());
-        }
+    void updateBeforeTimeIsOver() throws Exception {
+        TimeLimitUtil.setLimitTime(LocalTime.now().plus(1, ChronoUnit.SECONDS));
+        perform(MockMvcRequestBuilders.put(REST_URL)
+                .param("restaurantId", String.valueOf(MOSCOW_TIME_ID)))
+                .andDo(print())
+                .andExpect(status().isOk());
+        VoteTo actual = voteRepository.getUserVoteByDate(USER_ID, LocalDate.now())
+                .map(VoteUtil::createVoteTo).orElse(null);
+        assert actual != null;
+        assertEquals(actual.getRestaurantId(), MOSCOW_TIME_ID);
     }
 
     @Test

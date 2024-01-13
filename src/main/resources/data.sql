@@ -6,13 +6,16 @@ DELETE FROM users;
 
 INSERT INTO users (name, email, password)
 VALUES ('User', 'user@yandex.ru', '{noop}password'),
-       ('Admin', 'admin@gmail.com', '{noop}admin');
+       ('Admin', 'admin@gmail.com', '{noop}admin'),
+       ('User2', 'user2@yandex.ru', '{noop}password');
 
 
 INSERT INTO user_role (role, user_id)
 VALUES ('USER', 1),
        ('USER', 2),
-       ('ADMIN', 2);
+       ('ADMIN', 2),
+       ('USER', 3);
+
 
 INSERT INTO restaurant (name)
 VALUES ('Moscow time'),
@@ -33,4 +36,6 @@ VALUES ('Pizza', 480, 1, CURRENT_DATE),
 
 INSERT INTO vote (user_id, restaurant_id, voting_date)
 VALUES (1, 1, CURRENT_DATE),
+       (1, 1, CURRENT_DATE -1),
+       (1, 3, CURRENT_DATE -2),
        (2, 2, CURRENT_DATE);

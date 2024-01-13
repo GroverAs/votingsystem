@@ -1,5 +1,6 @@
 package ru.savelyev.votingsystem.web.restaurant;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,16 +27,20 @@ public class AdminRestaurantController {
     public static final String REST_URL = "/api/admin/restaurants";
     private final RestaurantRepository restaurantRepository;
 
+    @Operation(summary = "Get restaurant")
     @GetMapping("/{restaurantId}")
     public Restaurant get(@PathVariable int restaurantId) {
         return restaurantRepository.findById(restaurantId).orElseThrow(
                 () -> new IllegalRequestDataException("Restaurant with id=" + restaurantId + " not found"));
     }
 
+    @Operation(summary = "Get all restaurants")
     @GetMapping("/")
     public List<Restaurant> getAll() {
         return restaurantRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
+
+    @Operation(summary = "Create all restaurant")
     @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> createWithLocation(Restaurant restaurant) {
@@ -47,6 +52,7 @@ public class AdminRestaurantController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @Operation(summary = "Delete restaurant")
     @Transactional
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -54,6 +60,7 @@ public class AdminRestaurantController {
         restaurantRepository.deleteExisted(id);
     }
 
+    @Operation(summary = "Update restaurant")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {

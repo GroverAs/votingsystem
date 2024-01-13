@@ -40,6 +40,7 @@ public class VoteController {
     private final VoteRepository voteRepository;
     private final RestaurantRepository restaurantRepository;
 
+    @Operation(summary = "Get all votes by date of authorised user")
     @GetMapping("/by-date")
     public VoteTo getByDate(@RequestParam LocalDate votingDate) {
         int userId = authId();
@@ -48,24 +49,27 @@ public class VoteController {
                 .orElseThrow(() -> new IllegalRequestDataException("Vote for date=" + votingDate + " not found"));
     }
 
-    @Operation(summary = "Get all votes of logged in user")
+    @Operation(summary = "Get all votes of authorised user")
     @GetMapping("/")
     public List<VoteTo> getAll(@AuthenticationPrincipal AuthUser authUser) {
-        List<Vote> votes = voteRepository.getAllUserVotes(authId());
+        List<Vote> votes = voteRepository.getAllUserVotes(authUser.id());
         return createVoteTos(votes);
     }
 
+    @Operation(summary = "Get all authorised users votes for the restaurant")
     @GetMapping("/restaurant")
     public List<VoteTo> getAllForRestaurant(@RequestParam int restaurantId) {
         return createVoteTos(voteRepository.getAllUsersVotesForRestaurant(restaurantId, authId()));
     }
 
+    @Operation(summary = "Create vote from authorised user")
     @Transactional
     @PostMapping("/")
     public VoteTo createVoteForRestaurant(@RequestParam int restaurantId) {
         return createVoteTo(save(authUser(), restaurantRepository.getExisted(restaurantId)));
     }
 
+    @Operation(summary = "Change vote from authorised user")
     @Transactional
     @PutMapping("/")
     public VoteTo updateVote(@RequestParam int restaurantId) {

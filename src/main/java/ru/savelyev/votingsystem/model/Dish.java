@@ -38,11 +38,6 @@ public class Dish extends NamedEntity implements HasId {
     @NotNull
     private Restaurant restaurant;
 
-    public Dish(String name, int price) {
-        super(null, name);
-        this.price = price;
-    }
-
     public Dish(Integer id, String name, int price, Restaurant restaurant, LocalDate creatingDate) {
         super(id, name);
         this.price = price;

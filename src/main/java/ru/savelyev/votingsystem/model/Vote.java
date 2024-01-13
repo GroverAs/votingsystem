@@ -1,6 +1,5 @@
 package ru.savelyev.votingsystem.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -26,7 +25,6 @@ public class Vote extends BaseEntity implements HasId {
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
-    @JsonBackReference
     private User user;
 
     @Column(name = "voting_date", nullable = false, updatable = false, columnDefinition = "timestamp default now()")
@@ -38,17 +36,10 @@ public class Vote extends BaseEntity implements HasId {
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
-    @JsonBackReference
     private Restaurant restaurant;
 
     public Vote(Integer id, User user, Restaurant restaurant, LocalDate votingDate) {
         super(id);
-        this.votingDate = votingDate;
-        this.user = user;
-        this.restaurant = restaurant;
-    }
-
-    public Vote(LocalDate votingDate, User user, Restaurant restaurant) {
         this.votingDate = votingDate;
         this.user = user;
         this.restaurant = restaurant;

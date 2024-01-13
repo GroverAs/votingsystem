@@ -1,5 +1,6 @@
 package ru.savelyev.votingsystem.web.restaurant;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -25,17 +26,21 @@ public class RestaurantController {
     public static final String REST_URL = "/api/restaurants";
     private final RestaurantRepository repository;
 
+
+    @Operation(summary = "Get all restaurants")
     @GetMapping("/")
     public List<Restaurant> getAll() {
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
+    @Operation(summary = "Get all restaurants with menu")
     @GetMapping("/with-menu")
     public List<RestaurantTo> getAllWithDishesByDate() {
         List<Restaurant> allByDateWithDishes = repository.getAllWithDishesByLocalDate(LocalDate.now());
         return RestaurantUtil.createRestTos(allByDateWithDishes);
     }
 
+    @Operation(summary = "Get restaurant by id with menu")
     @GetMapping("/{id}/with-menu")
     public RestaurantTo getByIdAndDateWithDishes(@PathVariable int id) {
         return repository.getByIdAndLocalDate(id, LocalDate.now())

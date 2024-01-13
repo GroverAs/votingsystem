@@ -1,5 +1,6 @@
 package ru.savelyev.votingsystem.web.dish;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,24 +34,28 @@ public class DishController {
     private final DishRepository dishRepository;
     private final RestaurantRepository restaurantRepository;
 
+    @Operation(summary = "Get dish of restaurant by id")
     @GetMapping("/{id}")
     public Dish get(@PathVariable int id,
                     @PathVariable int restaurantId) {
         return dishRepository.isDishRelateToRestaurant(id, restaurantId);
     }
 
+    @Operation(summary = "Get all dishes of the restaurant")
     @GetMapping("/")
     public List<DishTo> getAllByRestaurant(@PathVariable int restaurantId) {
         List<Dish> allDishes = dishRepository.getAllDishesByRestaurantId(restaurantId);
         return DishUtil.getDishTos(allDishes);
     }
 
+    @Operation(summary = "Get all dishes of the restaurant by date")
     @GetMapping("/by-date")
     public List<DishTo> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate creatingDate) {
         List<Dish> getAllDishesByDate = dishRepository.getAllByDate(restaurantId, creatingDate);
         return DishUtil.getDishTos(getAllDishesByDate);
     }
 
+    @Operation(summary = "Create dish of the restaurant")
     @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody DishTo dishTo,
@@ -66,6 +71,7 @@ public class DishController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @Operation(summary = "Update dish of the restaurant")
     @Transactional
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -80,6 +86,7 @@ public class DishController {
         dishRepository.save(dish);
     }
 
+    @Operation(summary = "Delete dish of the restaurant")
     @Transactional
     @DeleteMapping("/{dishId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

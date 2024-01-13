@@ -13,6 +13,7 @@ import ru.savelyev.votingsystem.model.User;
 import ru.savelyev.votingsystem.repository.UserRepository;
 import ru.savelyev.votingsystem.web.AbstractControllerTest;
 
+//import static jdk.internal.org.jline.utils.InfoCmp.Capability.user2;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -133,7 +134,7 @@ class AdminUserControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(USER_MATCHER.contentJson(admin, user));
+                .andExpect(USER_MATCHER.contentJson(admin, user, UserTestData.user2));
     }
 
     @Test
