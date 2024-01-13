@@ -28,7 +28,8 @@ VALUES ('Pizza', 480, 1, CURRENT_DATE),
        ('Tea', 95, 2, CURRENT_DATE),
        ('Sushi set', 1299, 3, CURRENT_DATE),
        ('Fish', 670, 3, CURRENT_DATE),
-       ('WOK', 450, 3, CURRENT_DATE);
+       ('WOK', 450, 3, CURRENT_DATE),
+       ('Sushi roll', 399, 3, CURRENT_DATE -1);
 
 INSERT INTO vote (user_id, restaurant_id, voting_date)
 VALUES (1, 1, CURRENT_DATE),

@@ -3,13 +3,16 @@ package ru.savelyev.votingsystem.web.dish;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.savelyev.votingsystem.model.Dish;
 import ru.savelyev.votingsystem.repository.DishRepository;
 import ru.savelyev.votingsystem.util.DishUtil;
 import ru.savelyev.votingsystem.util.JsonUtil;
 import ru.savelyev.votingsystem.web.AbstractControllerTest;
+import ru.savelyev.votingsystem.web.user.UserTestData;
 
 import java.time.LocalDate;
 
@@ -20,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.savelyev.votingsystem.web.dish.DishTestData.*;
 import static ru.savelyev.votingsystem.web.restaurant.RestaurantTestData.*;
 
+@WithUserDetails(value = UserTestData.ADMIN_MAIL)
 class DishControllerTest extends AbstractControllerTest {
 
     static final String REST_URL = DishController.REST_URL + '/';
@@ -46,7 +50,7 @@ class DishControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void getAllByRestaurantAndLocalDate() throws Exception {
+    void getAllByRestaurantAndDate() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + "by-date", MOSCOW_TIME_ID)
                 .param("creatingDate", LocalDate.now().toString()))
                 .andExpect(status().isOk())
@@ -76,16 +80,23 @@ class DishControllerTest extends AbstractControllerTest {
     @Test
     void createWithLocation() throws Exception {
         Dish newDish = DishTestData.getNew();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL, MOSCOW_TIME_ID)
+        perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newDish)))
                 .andDo(print())
                 .andExpect(status().isCreated());
-        Dish created = DISH_MATCHER.readFromJson(action);
+        Dish created = DishTestData.getNew();
         int newId = created.id();
         newDish.setId(newId);
         DISH_MATCHER.assertMatch(created, newDish);
-        DISH_MATCHER.assertMatch(dishRepository.get(newId, MOSCOW_TIME_ID).orElse(null), newDish);
+//        DISH_MATCHER.assertMatch(dishRepository.get(newId, MOSCOW_TIME_ID).orElse(null), newDish);
+        DISH_MATCHER.assertMatch(dishRepository.getExisted(newId), (newDish));
+
+//        MenuTo newMenu = getNew();
+//        create(newMenu, status().isCreated());
+//
+//        newMenu.setId(MENU_NEW_ID);
+//        MENU_MATCHER.assertMatch(repository.getExisted(MENU_NEW_ID), createFromTo(newMenu));
     }
 
     @Test

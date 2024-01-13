@@ -25,7 +25,7 @@ public class RestaurantController {
     public static final String REST_URL = "/api/restaurants";
     private final RestaurantRepository repository;
 
-    @GetMapping
+    @GetMapping("/")
     public List<Restaurant> getAll() {
         return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }

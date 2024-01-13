@@ -34,7 +34,7 @@ CREATE TABLE dish
 (
     id            INTEGER AUTO_INCREMENT PRIMARY KEY,
     name          VARCHAR            NOT NULL,
-    price         DOUBLE PRECISION   NOT NULL,
+    price         INTEGER            NOT NULL,
     restaurant_id INTEGER            NOT NULL,
     creating_date DATE DEFAULT now() NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE

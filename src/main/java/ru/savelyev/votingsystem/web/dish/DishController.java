@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.savelyev.votingsystem.model.Dish;
+import ru.savelyev.votingsystem.model.Restaurant;
 import ru.savelyev.votingsystem.repository.DishRepository;
 import ru.savelyev.votingsystem.repository.RestaurantRepository;
 import ru.savelyev.votingsystem.to.DishTo;
@@ -19,6 +20,8 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
+import static java.util.Objects.requireNonNullElse;
+import static ru.savelyev.votingsystem.util.DishUtil.getDish;
 import static ru.savelyev.votingsystem.web.RestValidation.*;
 
 @RestController
@@ -36,15 +39,15 @@ public class DishController {
         return dishRepository.isDishRelateToRestaurant(id, restaurantId);
     }
 
-    @GetMapping
-    public List<Dish> getAllByRestaurant(@PathVariable int restaurantId) {
-        return dishRepository.getAllDishesByRestaurantId(restaurantId);
+    @GetMapping("/")
+    public List<DishTo> getAllByRestaurant(@PathVariable int restaurantId) {
+        List<Dish> allDishes = dishRepository.getAllDishesByRestaurantId(restaurantId);
+        return DishUtil.getDishTos(allDishes);
     }
 
     @GetMapping("/by-date")
-    public List<DishTo> getAllByRestaurantAndDate(@PathVariable int restaurantId,
-                                                  @RequestParam LocalDate date) {
-        List<Dish> getAllDishesByDate = dishRepository.getAllByDate(restaurantId, date == null ? LocalDate.now() : date);
+    public List<DishTo> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate creatingDate) {
+        List<Dish> getAllDishesByDate = dishRepository.getAllByDate(restaurantId, creatingDate);
         return DishUtil.getDishTos(getAllDishesByDate);
     }
 
@@ -71,7 +74,7 @@ public class DishController {
                        @PathVariable int restaurantId) {
         log.info("update dish {} for restaurant {}", id, restaurantId);
         assureIdConsistent(dishTo, id);
-        Dish dish = DishUtil.getDish(dishTo);
+        Dish dish = getDish(dishTo);
         dish.setRestaurant(restaurantRepository.getById(restaurantId));
         dish.setCreatingDate(LocalDate.now());
         dishRepository.save(dish);

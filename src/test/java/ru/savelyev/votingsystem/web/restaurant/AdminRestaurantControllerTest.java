@@ -3,22 +3,28 @@ package ru.savelyev.votingsystem.web.restaurant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.savelyev.votingsystem.model.NamedEntity;
 import ru.savelyev.votingsystem.model.Restaurant;
 import ru.savelyev.votingsystem.repository.RestaurantRepository;
 import ru.savelyev.votingsystem.util.JsonUtil;
 import ru.savelyev.votingsystem.web.AbstractControllerTest;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.savelyev.votingsystem.util.RestaurantUtil.createRestTo;
-import static ru.savelyev.votingsystem.util.RestaurantUtil.createRestTos;
 import static ru.savelyev.votingsystem.web.restaurant.RestaurantTestData.*;
+import static ru.savelyev.votingsystem.web.user.UserTestData.ADMIN_MAIL;
 
+@WithUserDetails(value = ADMIN_MAIL)
 class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = AdminRestaurantController.REST_URL + '/';
@@ -28,20 +34,23 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + YAPONA_PAPA_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + MEAT_PLACE_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_TO_MATCHER.contentJson(createRestTo(yapona_papa)));
+                .andExpect(RESTAURANT_MATCHER.contentJson(meat_place));
     }
 
     @Test
     void getAll() throws Exception {
+        List<Restaurant> restaurants = new ArrayList<>(
+                List.of(moscow_time, meat_place, yapona_papa));
+        restaurants.sort(Comparator.comparing(NamedEntity::getName));
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_TO_MATCHER.contentJson(createRestTos(RESTAURANTS)));
+                .andExpect(RESTAURANT_MATCHER.contentJson(restaurants));
     }
 
     @Test
@@ -99,7 +108,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
         assertFalse(restaurantRepository.findById(MEAT_PLACE_ID).isPresent());
     }
 
-@Test
+    @Test
     void deleteNotFound() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + NOT_FOUND))
                 .andDo(print())

@@ -12,6 +12,7 @@ import static ru.savelyev.votingsystem.util.DishUtil.getDishTos;
 
 @UtilityClass
 public class RestaurantUtil {
+
     public static RestaurantTo createRestTo(Restaurant restaurant) {
         return new RestaurantTo(restaurant.getId(), restaurant.getName(), getDishTos(restaurant.getDishes()));
     }

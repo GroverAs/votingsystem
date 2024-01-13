@@ -5,18 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.savelyev.votingsystem.model.NamedEntity;
 import ru.savelyev.votingsystem.model.Restaurant;
 import ru.savelyev.votingsystem.repository.RestaurantRepository;
 import ru.savelyev.votingsystem.web.AbstractControllerTest;
 import ru.savelyev.votingsystem.web.user.UserTestData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.savelyev.votingsystem.util.RestaurantUtil.createRestTos;
 import static ru.savelyev.votingsystem.web.dish.DishTestData.*;
 import static ru.savelyev.votingsystem.web.restaurant.RestaurantTestData.*;
 
@@ -32,6 +33,7 @@ class RestaurantControllerTest extends AbstractControllerTest {
     void getAll() throws Exception {
         List<Restaurant> restaurants = new ArrayList<>(
                 List.of(moscow_time, meat_place, yapona_papa));
+        restaurants.sort(Comparator.comparing(NamedEntity::getName));
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andDo(print())
                 .andExpect(status().isOk())

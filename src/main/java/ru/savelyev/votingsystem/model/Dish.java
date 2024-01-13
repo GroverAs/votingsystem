@@ -23,11 +23,6 @@ import java.time.LocalDate;
 @ToString(callSuper = true)
 public class Dish extends NamedEntity implements HasId {
 
-    @Column(name = "name", nullable = false)
-    @Size(max = 150)
-    @NotBlank
-    private String name;
-
     @Column(name = "price", nullable = false)
     @Range(min = 10, max = 8000)
     @NotNull
@@ -61,13 +56,6 @@ public class Dish extends NamedEntity implements HasId {
         this.price = dish.getPrice();
         this.creatingDate = dish.getCreatingDate();
         this.restaurant = dish.getRestaurant();
-    }
-
-    public Dish(Integer id, String name, int price, LocalDate localDate, Restaurant restaurant) {
-        super(id, name);
-        this.price = price;
-        this.creatingDate = localDate;
-        this.restaurant = restaurant;
     }
 
     public Dish(Integer id, String name, int price) {

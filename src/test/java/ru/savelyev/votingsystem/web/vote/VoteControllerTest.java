@@ -3,6 +3,7 @@ package ru.savelyev.votingsystem.web.vote;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.savelyev.votingsystem.repository.VoteRepository;
 import ru.savelyev.votingsystem.util.VoteUtil;
@@ -13,8 +14,9 @@ import java.time.LocalDate;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.savelyev.votingsystem.web.user.UserTestData.USER_MAIL;
 import static ru.savelyev.votingsystem.web.vote.VoteTestData.*;
-
+@WithUserDetails(value = USER_MAIL)
 class VoteControllerTest extends AbstractControllerTest {
     private static final String REST_URL = VoteController.REST_URL + "/";
 

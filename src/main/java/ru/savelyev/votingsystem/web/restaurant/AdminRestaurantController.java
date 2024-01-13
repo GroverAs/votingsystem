@@ -32,13 +32,13 @@ public class AdminRestaurantController {
                 () -> new IllegalRequestDataException("Restaurant with id=" + restaurantId + " not found"));
     }
 
-    @GetMapping
+    @GetMapping("/")
     public List<Restaurant> getAll() {
         return restaurantRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
-
+    @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> createWithLocation(Restaurant restaurant) {
         RestValidation.checkNew(restaurant);
         Restaurant created = restaurantRepository.save(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
