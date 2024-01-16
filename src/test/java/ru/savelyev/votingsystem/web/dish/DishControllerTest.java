@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.savelyev.votingsystem.model.Dish;
 import ru.savelyev.votingsystem.repository.DishRepository;
@@ -79,23 +80,16 @@ class DishControllerTest extends AbstractControllerTest {
     @Test
     void createWithLocation() throws Exception {
         Dish newDish = DishTestData.getNew();
-        perform(MockMvcRequestBuilders.post(REST_URL)
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL, MOSCOW_TIME_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newDish)))
                 .andDo(print())
                 .andExpect(status().isCreated());
-        Dish created = DishTestData.getNew();
+        Dish created = DISH_MATCHER.readFromJson(action);
         int newId = created.id();
         newDish.setId(newId);
         DISH_MATCHER.assertMatch(created, newDish);
-//        DISH_MATCHER.assertMatch(dishRepository.get(newId, MOSCOW_TIME_ID).orElse(null), newDish);
-        DISH_MATCHER.assertMatch(dishRepository.getExisted(newId), (newDish));
-
-//        MenuTo newMenu = getNew();
-//        create(newMenu, status().isCreated());
-//
-//        newMenu.setId(MENU_NEW_ID);
-//        MENU_MATCHER.assertMatch(repository.getExisted(MENU_NEW_ID), createFromTo(newMenu));
+        DISH_MATCHER.assertMatch(dishRepository.get(newId, MOSCOW_TIME_ID).orElse(null), newDish);
     }
 
     @Test

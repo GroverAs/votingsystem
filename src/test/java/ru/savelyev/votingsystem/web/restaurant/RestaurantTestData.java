@@ -13,7 +13,7 @@ public class RestaurantTestData {
     public static final int MOSCOW_TIME_ID = 1;
     public static final int MEAT_PLACE_ID = 2;
     public static final int YAPONA_PAPA_ID = 3;
-    public static final int NOT_FOUND = 50;
+    public static final int NOT_FOUND = 500;
 
     public static final Restaurant moscow_time = new Restaurant(MOSCOW_TIME_ID, "Moscow time");
     public static final Restaurant meat_place = new Restaurant(MEAT_PLACE_ID, "Meat place");

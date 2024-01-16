@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.savelyev.votingsystem.model.Dish;
-import ru.savelyev.votingsystem.model.Restaurant;
 import ru.savelyev.votingsystem.repository.DishRepository;
 import ru.savelyev.votingsystem.repository.RestaurantRepository;
 import ru.savelyev.votingsystem.to.DishTo;
@@ -21,9 +20,9 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
-import static java.util.Objects.requireNonNullElse;
 import static ru.savelyev.votingsystem.util.DishUtil.getDish;
-import static ru.savelyev.votingsystem.web.RestValidation.*;
+import static ru.savelyev.votingsystem.web.RestValidation.assureIdConsistent;
+import static ru.savelyev.votingsystem.web.RestValidation.checkNew;
 
 @RestController
 @RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,7 +56,7 @@ public class DishController {
 
     @Operation(summary = "Create dish of the restaurant")
     @Transactional
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody DishTo dishTo,
                                                    @PathVariable int restaurantId) {
         checkNew(dishTo);

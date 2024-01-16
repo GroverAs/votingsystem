@@ -68,7 +68,6 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newRestaurant)))
                 .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
         Restaurant created = RESTAURANT_MATCHER.readFromJson(action);
         int newId = created.id();

@@ -19,6 +19,8 @@ import ru.savelyev.votingsystem.web.RestValidation;
 import java.net.URI;
 import java.util.List;
 
+import static ru.savelyev.votingsystem.web.RestValidation.checkNew;
+
 @RestController
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
@@ -42,9 +44,9 @@ public class AdminRestaurantController {
 
     @Operation(summary = "Create restaurant")
     @Transactional
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(Restaurant restaurant) {
-        RestValidation.checkNew(restaurant);
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant) {
+        checkNew(restaurant);
         Restaurant created = restaurantRepository.save(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
