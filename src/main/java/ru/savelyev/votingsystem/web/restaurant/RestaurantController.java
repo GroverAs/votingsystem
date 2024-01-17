@@ -3,6 +3,7 @@ package ru.savelyev.votingsystem.web.restaurant;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ public class RestaurantController {
 
     @Operation(summary = "Get all restaurants with menu")
     @GetMapping("/with-menu")
+    @Cacheable(value = "restaurants")
     public List<RestaurantTo> getAllWithDishesByDate() {
         List<Restaurant> allByDateWithDishes = repository.getAllWithDishesByLocalDate(LocalDate.now());
         return RestaurantUtil.createRestTos(allByDateWithDishes);
@@ -42,6 +44,7 @@ public class RestaurantController {
 
     @Operation(summary = "Get restaurant by id with menu")
     @GetMapping("/{id}/with-menu")
+    @Cacheable(value = "restaurants", key = "#id")
     public RestaurantTo getByIdAndDateWithDishes(@PathVariable int id) {
         return repository.getByIdAndLocalDate(id, LocalDate.now())
                 .map(RestaurantUtil::createRestTo)

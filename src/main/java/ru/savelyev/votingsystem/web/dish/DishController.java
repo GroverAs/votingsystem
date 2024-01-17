@@ -4,6 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,7 @@ import static ru.savelyev.votingsystem.web.RestValidation.checkNew;
 @RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
+@CacheConfig(cacheNames = "dishes")
 public class DishController {
     static final String REST_URL = "/api/admin/restaurants/{restaurantId}/dishes";
     private final DishRepository dishRepository;
@@ -42,6 +46,7 @@ public class DishController {
 
     @Operation(summary = "Get all dishes of the restaurant")
     @GetMapping("/")
+    @Cacheable
     public List<DishTo> getAllByRestaurant(@PathVariable int restaurantId) {
         List<Dish> allDishes = dishRepository.getAllDishesByRestaurantId(restaurantId);
         return DishUtil.getDishTos(allDishes);
@@ -49,6 +54,7 @@ public class DishController {
 
     @Operation(summary = "Get all dishes of the restaurant by date")
     @GetMapping("/by-date")
+    @Cacheable
     public List<DishTo> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate creatingDate) {
         List<Dish> getAllDishesByDate = dishRepository.getAllByDate(restaurantId, creatingDate);
         return DishUtil.getDishTos(getAllDishesByDate);
@@ -57,6 +63,7 @@ public class DishController {
     @Operation(summary = "Create dish of the restaurant")
     @Transactional
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CacheEvict(allEntries = true)
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody DishTo dishTo,
                                                    @PathVariable int restaurantId) {
         checkNew(dishTo);
@@ -74,6 +81,7 @@ public class DishController {
     @Transactional
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(key = "#id", allEntries = true)
     public void update(@Valid @RequestBody DishTo dishTo,
                        @PathVariable int id,
                        @PathVariable int restaurantId) {
@@ -89,6 +97,7 @@ public class DishController {
     @Transactional
     @DeleteMapping("/{dishId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CacheEvict(allEntries = true)
     public void delete(@PathVariable int dishId) {
         dishRepository.delete(dishId);
 
