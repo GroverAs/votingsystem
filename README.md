@@ -54,7 +54,7 @@ curl -X GET http://localhost:8080/api/profile/votes/ -v --user user@yandex.ru:pa
 
 - Get all votes of authorised users votes for the restaurant {1}:
 ```bash
-curl -X GET http://localhost:8080/api/profile/votes/restaurant?restaurantId=1 -v --user user@yandex.ru:password
+curl -X GET http://localhost:8080/api/profile/votes/by-restaurant?restaurantId=1 -v --user user@yandex.ru:password
 ```
 
 - Change vote of authorised user {user2}:

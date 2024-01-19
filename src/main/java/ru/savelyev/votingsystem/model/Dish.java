@@ -14,7 +14,7 @@ import ru.savelyev.votingsystem.HasId;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "creating_date", "restaurant_id"},
+@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "actual_date", "restaurant_id"},
         name = "dish_unique_restaurant_name_idx")})
 @Getter
 @Setter
@@ -24,13 +24,12 @@ import java.time.LocalDate;
 public class Dish extends NamedEntity implements HasId {
 
     @Column(name = "price", nullable = false)
-    @Range(min = 10, max = 8000)
     @NotNull
     private int price;
 
-    @Column(name = "creating_date", nullable = false)
+    @Column(name = "actual_date", nullable = false)
     @NotNull
-    private LocalDate creatingDate = LocalDate.now();
+    private LocalDate actualDate = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
@@ -38,18 +37,18 @@ public class Dish extends NamedEntity implements HasId {
     @NotNull
     private Restaurant restaurant;
 
-    public Dish(Integer id, String name, int price, Restaurant restaurant, LocalDate creatingDate) {
+    public Dish(Integer id, String name, int price, Restaurant restaurant, LocalDate actualDate) {
         super(id, name);
         this.price = price;
         this.restaurant = restaurant;
-        this.creatingDate = creatingDate;
+        this.actualDate = actualDate;
 
     }
 
     public Dish(Dish dish) {
         super(dish.getId(), dish.getName());
         this.price = dish.getPrice();
-        this.creatingDate = dish.getCreatingDate();
+        this.actualDate = dish.getActualDate();
         this.restaurant = dish.getRestaurant();
     }
 

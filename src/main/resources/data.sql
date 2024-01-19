@@ -22,7 +22,7 @@ VALUES ('Moscow time'),
        ('Meat place'),
        ('Yapona papa');
 
-INSERT INTO dish (name, price, restaurant_id, creating_date)
+INSERT INTO dish (name, price, restaurant_id, actual_date)
 VALUES ('Pizza', 480, 1, CURRENT_DATE),
        ('Soup', 350, 1, CURRENT_DATE),
        ('Coffee', 120, 1, CURRENT_DATE),

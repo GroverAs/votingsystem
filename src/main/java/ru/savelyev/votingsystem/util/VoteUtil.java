@@ -11,7 +11,7 @@ import java.util.List;
 public class VoteUtil {
 
     public static VoteTo createVoteTo(Vote vote) {
-        return new VoteTo(vote.id(), vote.getVotingDate(), vote.getRestaurant().id());
+        return new VoteTo(vote.getId(), vote.getVotingDate(), vote.getRestaurant().getId());
     }
 
     public static List<VoteTo> createVoteTos(Collection<Vote> votes) {

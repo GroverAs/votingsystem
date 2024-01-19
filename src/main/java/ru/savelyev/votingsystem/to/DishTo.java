@@ -1,5 +1,6 @@
 package ru.savelyev.votingsystem.to;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
@@ -9,6 +10,7 @@ import lombok.Value;
 @ToString(callSuper = true)
 public class DishTo extends NamedTo {
 
+    @NotNull
     int price;
 
     public DishTo(Integer id, String name, int price) {

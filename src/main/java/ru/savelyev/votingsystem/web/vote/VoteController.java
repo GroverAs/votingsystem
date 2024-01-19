@@ -29,7 +29,7 @@ import static ru.savelyev.votingsystem.util.VoteUtil.createVoteTo;
 import static ru.savelyev.votingsystem.util.VoteUtil.createVoteTos;
 import static ru.savelyev.votingsystem.web.AuthUser.authId;
 import static ru.savelyev.votingsystem.web.AuthUser.authUser;
-import static ru.savelyev.votingsystem.web.RestValidation.assureTimeOver;
+import static ru.savelyev.votingsystem.web.RestValidation.assureTime;
 
 @RestController
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,7 +57,7 @@ public class VoteController {
     }
 
     @Operation(summary = "Get all authorised users votes for the restaurant")
-    @GetMapping("/restaurant")
+    @GetMapping("/by-restaurant")
     public List<VoteTo> getAllForRestaurant(@RequestParam int restaurantId) {
         return createVoteTos(voteRepository.getAllUsersVotesForRestaurant(restaurantId, authId()));
     }
@@ -83,7 +83,7 @@ public class VoteController {
         }
         Vote newVote = new Vote(null, user, restaurant, LocalDate.now());
         if (!newVote.isNew()) {
-            assureTimeOver(LocalTime.now());
+            assureTime(LocalTime.now());
         }
         return voteRepository.save(newVote);
     }
@@ -92,7 +92,7 @@ public class VoteController {
         Objects.requireNonNull(restaurant);
         Optional<Vote> vote = voteRepository.getUserVoteByDate(userId, LocalDate.now());
         if (vote.isPresent()) {
-            assureTimeOver(LocalTime.now());
+            assureTime(LocalTime.now());
             vote.get().setRestaurant(restaurant);
             vote.get().setVotingDate(LocalDate.now());
             return voteRepository.save(vote.get());

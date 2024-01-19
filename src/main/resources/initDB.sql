@@ -36,17 +36,17 @@ CREATE TABLE dish
     name          VARCHAR            NOT NULL,
     price         INTEGER            NOT NULL,
     restaurant_id INTEGER            NOT NULL,
-    creating_date DATE DEFAULT now() NOT NULL,
+    actual_date   DATE DEFAULT now() NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX dish_unique_restaurant_name_idx ON dish (name, creating_date, restaurant_id);
+CREATE UNIQUE INDEX dish_unique_restaurant_name_idx ON dish (restaurant_id, actual_date, name);
 
 CREATE TABLE vote
 (
     id            INTEGER AUTO_INCREMENT PRIMARY KEY,
     user_id       INTEGER            NOT NULL,
     restaurant_id INTEGER            NOT NULL,
-    voting_date    DATE DEFAULT now() NOT NULL,
+    voting_date   DATE DEFAULT now() NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );

@@ -10,6 +10,7 @@ import ru.savelyev.votingsystem.model.BaseEntity;
 import ru.savelyev.votingsystem.model.Vote;
 import ru.savelyev.votingsystem.repository.VoteRepository;
 import ru.savelyev.votingsystem.to.VoteTo;
+import ru.savelyev.votingsystem.util.JsonUtil;
 import ru.savelyev.votingsystem.util.TimeLimitUtil;
 import ru.savelyev.votingsystem.util.VoteUtil;
 import ru.savelyev.votingsystem.web.AbstractControllerTest;

@@ -20,7 +20,7 @@ public class Restaurant extends NamedEntity implements HasId {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @OrderBy("creatingDate DESC")
+    @OrderBy("actualDate DESC")
     @JsonIgnore
     private List<Dish> dishes;
 

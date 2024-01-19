@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.savelyev.votingsystem.error.IllegalRequestDataException;
+import ru.savelyev.votingsystem.error.NotFoundException;
 import ru.savelyev.votingsystem.model.Restaurant;
 import ru.savelyev.votingsystem.repository.RestaurantRepository;
 import ru.savelyev.votingsystem.web.RestValidation;
@@ -33,7 +34,7 @@ public class AdminRestaurantController {
     @GetMapping("/{restaurantId}")
     public Restaurant get(@PathVariable int restaurantId) {
         return restaurantRepository.findById(restaurantId).orElseThrow(
-                () -> new IllegalRequestDataException("Restaurant with id=" + restaurantId + " not found"));
+                () -> new NotFoundException("Restaurant with id=" + restaurantId + " not found"));
     }
 
     @Operation(summary = "Get all restaurants")

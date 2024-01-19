@@ -41,7 +41,7 @@ public class DishController {
     @GetMapping("/{id}")
     public Dish get(@PathVariable int id,
                     @PathVariable int restaurantId) {
-        return dishRepository.isDishRelateToRestaurant(id, restaurantId);
+        return dishRepository.checkRelationToRestaurant(id, restaurantId);
     }
 
     @Operation(summary = "Get all dishes of the restaurant")
@@ -55,8 +55,8 @@ public class DishController {
     @Operation(summary = "Get all dishes of the restaurant by date")
     @GetMapping("/by-date")
     @Cacheable
-    public List<DishTo> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate creatingDate) {
-        List<Dish> getAllDishesByDate = dishRepository.getAllByDate(restaurantId, creatingDate);
+    public List<DishTo> getAllByRestaurantAndDate(@PathVariable int restaurantId, @RequestParam LocalDate actualDate) {
+        List<Dish> getAllDishesByDate = dishRepository.getAllByDate(restaurantId, actualDate);
         return DishUtil.getDishTos(getAllDishesByDate);
     }
 
@@ -68,8 +68,8 @@ public class DishController {
                                                    @PathVariable int restaurantId) {
         checkNew(dishTo);
         Dish dish = DishUtil.getDish(dishTo);
-        dish.setRestaurant(restaurantRepository.getById(restaurantId));
-        dish.setCreatingDate(LocalDate.now());
+        dish.setRestaurant(restaurantRepository.getReferenceById(restaurantId));
+        dish.setActualDate(LocalDate.now());
         Dish created = dishRepository.save(dish);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -89,7 +89,7 @@ public class DishController {
         assureIdConsistent(dishTo, id);
         Dish dish = getDish(dishTo);
         dish.setRestaurant(restaurantRepository.getById(restaurantId));
-        dish.setCreatingDate(LocalDate.now());
+        dish.setActualDate(LocalDate.now());
         dishRepository.save(dish);
     }
 

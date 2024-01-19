@@ -73,7 +73,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newRestaurant.setId(newId);
         RESTAURANT_MATCHER.assertMatch(created, newRestaurant);
-        RESTAURANT_MATCHER.assertMatch(restaurantRepository.getById(newId), newRestaurant);
+        RESTAURANT_MATCHER.assertMatch(restaurantRepository.getReferenceById(newId), newRestaurant);
     }
 
     @Test
@@ -96,7 +96,7 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(updated)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        RESTAURANT_MATCHER.assertMatch(restaurantRepository.getById(MOSCOW_TIME_ID), getUpdated());
+        RESTAURANT_MATCHER.assertMatch(restaurantRepository.getReferenceById(MOSCOW_TIME_ID), getUpdated());
     }
 
     @Test

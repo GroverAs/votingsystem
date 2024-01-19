@@ -52,7 +52,7 @@ class DishControllerTest extends AbstractControllerTest {
     @Test
     void getAllByRestaurantAndDate() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + "by-date", MOSCOW_TIME_ID)
-                .param("creatingDate", LocalDate.now().toString()))
+                .param("actualDate", LocalDate.now().toString()))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
